@@ -2,11 +2,14 @@
 
 import 'package:firebase_database/firebase_database.dart';
 
+import 'package:luvit_assessment/services/translator_service.dart';
+
 abstract class NavigationState {}
 
 class HomeScreenState extends NavigationState {
   Stream<DatabaseEvent> dataStream;
-  HomeScreenState({required this.dataStream});
+  TranslationService translationService;
+  HomeScreenState({required this.dataStream, required this.translationService});
 }
 
 class Screen1State extends NavigationState {}

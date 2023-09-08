@@ -2,13 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:luvit_assessment/bloc/NavigationBloc/event.dart';
 import 'package:luvit_assessment/bloc/NavigationBloc/state.dart';
 import 'package:luvit_assessment/services/api_service.dart';
+import 'package:luvit_assessment/services/translator_service.dart';
 
 import '../../services/firebase_rtdb_service.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   final ApiService apiService;
-  FirebaseRealtimeDatabaseService databaseService =
+  final FirebaseRealtimeDatabaseService databaseService =
       FirebaseRealtimeDatabaseService();
+  final TranslationService translate = TranslationService();
 
   NavigationBloc(this.apiService) : super(LoadingState()) {
     on<NavigationEvent>((event, emit) async {
@@ -16,10 +18,12 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         print('debugging: To Home');
         emit(LoadingState());
 
+        // await translate.initializeTranslator();
         await apiService.resetData();
 
         emit(HomeScreenState(
-            dataStream: databaseService.listenToDataUpdates("data")));
+            dataStream: databaseService.listenToDataUpdates("data"),
+            translationService: translate));
       } else if (event is NavigateToScreen1) {
         print('debugging: To Screen1');
         emit(Screen1State());
