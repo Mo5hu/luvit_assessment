@@ -1,4 +1,4 @@
-package com.example.luvit_assessment
+package com.example.assignmentluvit
 
 import io.flutter.embedding.android.FlutterActivity
 
